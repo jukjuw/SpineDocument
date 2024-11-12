@@ -4,7 +4,6 @@ info:
   description: 该文档描述了矫正平台相关的所有 API 接口。
   version: 1.0.0
 
-          
 paths:
   /manage/connect:
     post:
@@ -12,7 +11,7 @@ paths:
         - 设备管理
       summary: 订阅设备
       description: 为指定设备创建一个使用记录，写入起始时间和设备Id，并设置status。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -24,22 +23,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/useRecord'
-              
+              $ref: "#/components/schemas/useRecord"
+
       responses:
-        '200':
+        "200":
           description: 使用记录添加成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/returnMsg'
+                $ref: "#/components/schemas/returnMsg"
+
   /manage/disconnect:
     put:
       tags:
         - 设备管理
       summary: 断开设备
       description: 为指定设备完善使用记录，写入结束时间，并设置status。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -51,15 +51,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/useRecord'
-              
+              $ref: "#/components/schemas/useRecord"
+
       responses:
-        '200':
+        "200":
           description: 使用记录添加成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/returnMsg'
+                $ref: "#/components/schemas/returnMsg"
 
   /manage/sensor:
     put:
@@ -67,7 +67,7 @@ paths:
         - 设备管理
       summary: 上传使用结束的传感器数据
       description: 通过包含时间戳的传感器数据列表更新指定记录的传感器数据。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -85,27 +85,27 @@ paths:
                   type: integer
                   description: 记录 ID。
                 deviceMessageArray:
-                  $ref: '#/components/schemas/deviceMessageArray'
-                
+                  $ref: "#/components/schemas/deviceMessageArray"
+
       responses:
-        '200':
+        "200":
           description: 记录更新成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/returnMsg'
+                $ref: "#/components/schemas/returnMsg"
     get:
       tags:
         - 设备管理
       summary: 获取设备上传的数据
-      description: 根据设备 ID 获取用户相关矫正数据。
+      description: 根据记录 ID 获取用户相关矫正数据。
       parameters:
-        - name: device_id
+        - name: recordId
           in: query
           required: true
           schema:
             type: integer
-          description: 设备 ID。
+          description: 记录 ID
         - name: Authorization
           in: header
           description: 令牌
@@ -113,21 +113,21 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: 成功检索设备数据
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  errCode:
+                  code:
                     type: integer
                   message:
                     type: string
                   total:
                     type: integer
                   rows:
-                    $ref: '#/components/schemas/deviceMessageArray'
+                    $ref: "#/components/schemas/deviceMessageArray"
 
   /manage/use:
     get:
@@ -135,7 +135,7 @@ paths:
         - 数据管理
       summary: 获取使用记录
       description: 检索用户设备的使用记录列表。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -143,7 +143,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: 成功检索使用记录
           content:
             application/json:
@@ -152,12 +152,12 @@ paths:
                 properties:
                   total:
                     type: integer
-                  errCode:
+                  code:
                     type: integer
                   message:
                     type: string
                   rows:
-                    $ref: '#/components/schemas/useRecord'
+                    $ref: "#/components/schemas/useRecord"
 
   /user/case:
     post:
@@ -165,7 +165,7 @@ paths:
         - 数据管理
       summary: 上传病例文件
       description: 提交医生创建的病例文件。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -184,7 +184,7 @@ paths:
                   additionalProperties: true
                   description: 病例数据详情。
       responses:
-        '200':
+        "200":
           description: 病例上传成功
           content:
             application/json:
@@ -202,7 +202,7 @@ paths:
         - 数据管理
       summary: 获取用户病例
       description: 获取用户的病例列表。
-      parameters: 
+      parameters:
         - name: Authorization
           in: header
           description: 令牌
@@ -210,7 +210,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: 成功检索用户病例
           content:
             application/json:
@@ -229,16 +229,17 @@ paths:
                           type: object
                           additionalProperties: true
                           description: 病例数据
+
 components:
   schemas:
     returnMsg:
       type: object
       properties:
-        errCode:
+        code:
           type: integer
         message:
           type: string
-    useRecord: 
+    useRecord:
       type: object
       properties:
         device_id:
@@ -246,11 +247,11 @@ components:
           description: 设备 ID。
         start_time:
           type: string
-          example:  yyyy-mm-dd hh:mm:ss
+          example: yyyy-mm-dd hh:mm:ss
           description: 开始时间，格式为 'yyyy-MM-dd HH:mm:ss'。
         end_time:
           type: string
-          example:  yyyy-mm-dd hh:mm:ss
+          example: yyyy-mm-dd hh:mm:ss
           description: 结束时间，格式为 'yyyy-MM-dd HH:mm:ss'。
     deviceMessageArray:
       type: array
@@ -259,7 +260,7 @@ components:
         properties:
           time:
             type: string
-            example:  yyyy-mm-dd hh:mm:ss
+            example: yyyy-mm-dd hh:mm:ss
             description: 传感器数据的时间戳。
           sensorInfo:
             type: object
