@@ -10,7 +10,7 @@ paths:
       tags:
         - 设备管理
       summary: 订阅设备
-      description: 为指定设备创建一个使用记录，写入起始时间和设备Id，并设置status。
+      description: 为指定设备创建一个使用记录，写入起始时间和设备Id，并设置status, 返回该条记录的id。
       parameters:
         - name: Authorization
           in: header
@@ -31,7 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/returnMsg"
+                $ref: "#/components/schemas/returnMsgWithRecordId"
 
   /manage/disconnect:
     put:
@@ -239,6 +239,15 @@ components:
           type: integer
         message:
           type: string
+    returnMsgWithRecordId:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        id: 
+          type: integer
     useRecord:
       type: object
       properties:
