@@ -251,14 +251,17 @@ components:
     useRecord:
       type: object
       properties:
-        device_id:
+        recordId:
+          type: integer
+          description: 记录 ID。
+        deviceId:
           type: integer
           description: 设备 ID。
-        start_time:
+        startTime:
           type: string
           example: yyyy-mm-dd hh:mm:ss
           description: 开始时间，格式为 'yyyy-MM-dd HH:mm:ss'。
-        end_time:
+        endTime:
           type: string
           example: yyyy-mm-dd hh:mm:ss
           description: 结束时间，格式为 'yyyy-MM-dd HH:mm:ss'。
@@ -274,7 +277,7 @@ components:
           sensorInfo:
             type: object
             properties:
-              device_id:
+              deviceId:
                 type: integer
                 description: 设备 ID。
               distance:
