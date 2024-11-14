@@ -163,8 +163,8 @@ paths:
     post:
       tags:
         - 数据管理
-      summary: 上传病例文件
-      description: 提交医生创建的病例文件。
+      summary: 上传医生对使用者的指导建议
+      description: 提交医生创建的建议。
       parameters:
         - name: Authorization
           in: header
@@ -177,31 +177,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                case_data:
-                  type: object
-                  additionalProperties: true
-                  description: 病例数据详情。
+              $ref: "#/components/schemas/case"
       responses:
         "200":
-          description: 病例上传成功
+          description: 上传成功
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "病例上传成功"
-                  status:
-                    type: string
-                    example: "success"
+                $ref: "#/components/schemas/returnMsg"
     get:
       tags:
         - 数据管理
-      summary: 获取用户病例
-      description: 获取用户的病例列表。
+      summary: 获取用户所属医生指导
+      description: 获取用户的所属医生指导列表。
       parameters:
         - name: Authorization
           in: header
@@ -211,24 +199,11 @@ paths:
             type: string
       responses:
         "200":
-          description: 成功检索用户病例
+          description: 成功检索用户所属医生指导
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  cases:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        case_id:
-                          type: integer
-                          description: 病例 ID
-                        case_data:
-                          type: object
-                          additionalProperties: true
-                          description: 病例数据
+                $ref: "#/components/schemas/caseList"
 
 components:
   schemas:
@@ -283,3 +258,32 @@ components:
               distance:
                 type: number
                 description: 传感器测量的距离。
+    case:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: 用户 ID。
+        userName:
+          type: string
+        doctorName:
+          type: string
+        doctorId:
+          type: integer
+        adviceContent:
+          type: string
+        createTime:
+          type: string
+    caseList:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/case"
+
+
