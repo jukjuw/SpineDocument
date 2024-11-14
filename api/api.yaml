@@ -10,7 +10,7 @@ paths:
       tags:
         - 设备管理
       summary: 订阅设备
-      description: 为指定设备创建一个使用记录，写入起始时间和设备Id，并设置status, 返回该条记录的id。
+      description: 为指定设备创建一个使用记录，写入起始时间和设备Id，并设置status, 返回该条记录的id，recordId为空 。
       parameters:
         - name: Authorization
           in: header
@@ -100,18 +100,24 @@ paths:
       summary: 获取设备上传的数据
       description: 根据记录 ID 获取用户相关矫正数据。
       parameters:
-        - name: recordId
-          in: query
-          required: true
-          schema:
-            type: integer
-          description: 记录 ID
         - name: Authorization
           in: header
           description: 令牌
           required: true
           schema:
             type: string
+        - name: page
+          in: query
+          description: 页码
+          required: true
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          description: 每页记录数
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: 成功检索设备数据
@@ -142,6 +148,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: page
+          in: query
+          description: 页码
+          required: true
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          description: 每页记录数
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: 成功检索使用记录
@@ -197,6 +215,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: page
+          in: query
+          description: 页码
+          required: true
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          description: 每页记录数
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: 成功检索用户所属医生指导
